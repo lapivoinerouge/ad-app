@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
+const socket = require('socket.io');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
 const mongoose = require('mongoose');
@@ -54,4 +55,23 @@ app.use('/', (req, res) => {
 const port = process.env.PORT || 8000;
 const server = app.listen(port, () => {
   console.log(`Server is running on port: ${port}`)
+});
+
+/* websocket config */
+const Ad = require('./models/ad.model');
+const io = socket(server, {
+  cors: {
+    origin: "http://localhost:3000"
+  }
+});
+
+io.on('connection', (socket) => {
+  Ad.find().then((ads) => {
+    socket.emit('updatedAds', ads);
+  })
+});
+
+app.use((req, res, next) => {
+  req.io = io;
+  next();
 });

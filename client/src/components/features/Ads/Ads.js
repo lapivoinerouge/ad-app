@@ -1,10 +1,21 @@
 import Row from 'react-bootstrap/Row';
 import AdCard from '../AdCard/AdCard'
-import { useSelector } from "react-redux";
-import { getAllAds } from "../../../redux/adRedux";
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from "react-redux";
+import { getAllAds, updateAds } from "../../../redux/adRedux";
+import { io } from "socket.io-client";
+import { SERVER_URL } from '../../../config';
 
 const Ads = () => {
+  const dispatch = useDispatch();
   const ads = useSelector(getAllAds);
+
+  useEffect(() => {
+    const socket = io(SERVER_URL);
+    socket.on('updatedAds', updatedAds => {
+      dispatch(updateAds(updatedAds));
+    });
+  }, []);
 
   return (
     <Row xs={1} md={2} className="g-4">
