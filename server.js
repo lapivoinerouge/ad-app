@@ -16,6 +16,7 @@ app.use(session({
   secret: process.env.SECRET,
   cookie: {
     secure: process.env.NODE_ENV == 'production',
+    httpOnly: true,
   },
   store: MongoStore.create(mongoose.connection), 
   resave: false, 
@@ -38,13 +39,17 @@ if(process.env.NODE_ENV !== 'production') {
 app.use(express.urlencoded({ extended: false}));
 app.use(express.json());
 
+/* API */
+app.use('/api', adRoutes);
+app.use('/api', userRoutes);
+app.use('/auth', authRoutes);
+
+app.use('/', (req, res) => {
+  res.status(404).json({ message: 'Not found' });
+});
+
 /* server */
 const port = process.env.PORT || 8000;
 const server = app.listen(port, () => {
   console.log(`Server is running on port: ${port}`)
 });
-
-/* API */
-app.use('/api', adRoutes);
-app.use('/api', userRoutes);
-app.use('/auth', authRoutes);

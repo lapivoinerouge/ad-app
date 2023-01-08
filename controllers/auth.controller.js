@@ -42,6 +42,12 @@ exports.login = async (req, res) => {
   }
 }
 
+exports.logout = async (req, res) => {
+  req.session.destroy((err) => {
+    res.redirect('/');
+  }
+)}
+
 exports.getUser = async (req, res) => {
   if (req.session.user.username ) {
     res.status(200).json({ username: req.session.user.username })
