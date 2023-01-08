@@ -1,7 +1,13 @@
-function App() {
+import { Routes, Route } from 'react-router-dom';
+
+const App = () => {
   return (
-    <div className="App">
-    </div>
+    <main>
+      <Routes>
+        {/* <Route path="/" element={<Home />} />
+        <Route path='*' element={<ErrorPage />} /> */}
+      </Routes>
+   </main>
   );
 }
 

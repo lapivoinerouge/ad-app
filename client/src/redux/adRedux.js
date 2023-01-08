@@ -1,6 +1,7 @@
 //selectors
 
 // actions
+// eslint-disable-next-line
 const createActionName = actionName => `app/ads/${actionName}`;
 
 // action creators
