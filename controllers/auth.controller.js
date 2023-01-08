@@ -3,13 +3,14 @@ const bcryptjs = require('bcryptjs');
 
 exports.register = async (req, res) => {
   try {
-    const { username, password, avatar, phoneNumber } = req.body;
+    const { username, password, phoneNumber } = req.body;
+    const avatar = req.file;
     if (username && typeof username === 'string' && password && typeof password === 'string') {
       const existingUser = await User.findOne({ username: { $eq: username} });
       if (existingUser) {
         return res.status(409).json({ message: 'User already exists'})
       }
-      const user = await User.create({ username, password: await bcryptjs.hash(password, 10), avatar, phoneNumber });
+      const user = await User.create({ username, password: await bcryptjs.hash(password, 10), avatar: avatar.filename, phoneNumber });
       res.status(201).json({ message: `User created: ${user.username}` })
     } else {
       res.status(400).json({ message: 'Bad request'});
@@ -21,7 +22,7 @@ exports.register = async (req, res) => {
 
 exports.login = async (req, res) => {
   try {
-    const { username, password, avatar, phoneNumber } = req.body;
+    const { username, password } = req.body;
     if (username && typeof username === 'string' && password && typeof password === 'string') {
       const user = await User.findOne({ username: { $eq: username} });
       if (!user) {
