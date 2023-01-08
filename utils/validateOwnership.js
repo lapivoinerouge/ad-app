@@ -6,7 +6,7 @@ const validateOwnership = async (req, res, next) => {
 
   const ad = Ad.findById(adId);
 
-  if ( ad.author === req.session.user ) {
+  if ( ad.author === userId ) {
     next();
   } else {
     res.status(403).json({ message: 'Forbidden' });
