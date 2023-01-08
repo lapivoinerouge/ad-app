@@ -1,12 +1,14 @@
 const express = require('express');
 const cors = require('cors');
-const connectToDB = require('./db');
+const path = require('path');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
 const mongoose = require('mongoose');
 require('dotenv').config();
 
 const app = express();
+
+app.use(express.static(path.join(__dirname, '/public')));
 
 /* mongoose */
 require('./db');
