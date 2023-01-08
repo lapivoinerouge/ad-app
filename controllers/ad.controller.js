@@ -1,5 +1,8 @@
 const Ad = require('../models/ad.model');
-const User = require('../models/user.model');
+
+const validateStringParam = (param) => {
+  return param && typeof param === 'string';
+}
 
 exports.getAll = async (req, res) => {
   try {
@@ -32,27 +35,37 @@ exports.getBySearchPhrase = async (req, res) => {
 
 exports.post = async (req, res) => {
   try {
-    const { title, content, published, image, price, location, author } = req.body;
-    // const image = req.files.file;
-    const user = await User.findById(author);
-    // const user = await User.find({ username: author });
-    if(!user) res.status(404).json({ message: 'You need to be logged in to post' });
-    const ad = new Ad({ title, content, published, image, price, location, author: user._id });
-    await ad.save();
-    res.json({ message: 'OK' });
+    const { title, content, price, location } = req.body;
+    const user = req.session.user;
+    const image = req.file;
+
+    const fileType = image ? await getImageFileType(image) : 'unknown';
+    const acceptedFileType = ['image/png', 'image/jpg', 'image/jpeg'].includes(fileType);
+
+    if (validateStringParam(title) && validateStringParam(content) && validateStringParam(location) && user && acceptedFileType) {
+      const published = Date.now();
+      const ad = new Ad({ title, content, published, image, price, location, author: user.id });
+      await ad.save();
+      res.json({ message: 'OK' });
+    } else {
+      res.status(400).json({ message: 'Bad request' });
+    }
   } catch(err) {
     res.status(500).json({ message: err });
   }
 }
 
 exports.put = async (req, res) => {
-  const { title, content, published, image, price, location, author } = req.body;
-  // const image = req.files.file;
-  const user = await User.findById(author);
-  // const user = await User.find({ username: author });
-  if(!user) res.status(404).json({ message: 'You need to be logged in to post' });
+  const { title, content, price, location } = req.body;
+  const user = req.session.user;
+  const image = req.file;
+
   try {
-    await Ad.updateOne({ _id: req.params.id }, { $set: { title, content, published, image, price, location, author: user._id }});
+    if (image) {
+      await Ad.updateOne({ _id: req.params.id, author: user.id }, { $set: { title, content, image, price, location }});
+    } else {
+      await Ad.updateOne({ _id: req.params.id, author: user.id }, { $set: { title, content, price, location }});
+    }
     res.json({ message: 'OK' });
   }
   catch(err) {
