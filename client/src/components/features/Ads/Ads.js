@@ -13,6 +13,9 @@ const Ads = () => {
   useEffect(() => {
     const socket = io(SERVER_URL);
     socket.on('updatedAds', updatedAds => {
+      updatedAds.sort(function(a,b){
+        return new Date(b.published) - new Date(a.published);
+      });
       dispatch(updateAds(updatedAds));
     });
   }, []);
