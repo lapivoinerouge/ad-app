@@ -1,5 +1,6 @@
 const Ad = require('../models/ad.model');
 const fs = require('fs');
+const getImageFileType = require('../utils/getImageFileType');
 
 const validateStringParam = (param) => {
   return param && typeof param === 'string';
@@ -45,7 +46,8 @@ exports.post = async (req, res) => {
 
     if (validateStringParam(title) && validateStringParam(content) && validateStringParam(location) && price && user && acceptedFileType) {
       const published = Date.now();
-      const ad = new Ad({ title, content, published, image, price, location, author: user.id });
+      const ad = new Ad({ title, content, published, image: image.filename, price, location, author: user.id });
+      console.log('AAAAA')
       await ad.save();
       res.json({ message: 'OK' });
     } else {
@@ -79,7 +81,7 @@ exports.put = async (req, res) => {
       }
       
       if (image) {
-        await Ad.updateOne({ _id: req.params.id, author: user.id }, { $set: { title, content, image, price, location }});
+        await Ad.updateOne({ _id: req.params.id, author: user.id }, { $set: { title, content, image: image.filename, price, location }});
         fs.unlinkSync(`public/uploads/${existingAd.image}`);
       } else {
         await Ad.updateOne({ _id: req.params.id, author: user.id }, { $set: { title, content, price, location }});
