@@ -2,7 +2,7 @@ import PageTitle from "../../common/PageTitle/PageTitle";
 import SearchedAds from "../../features/SearchedAds/SearchedAds";
 import { useParams } from 'react-router';
 
-const SearchResults = () => {
+const Search = () => {
   const { searchPhrase } = useParams();
 
   return (
@@ -13,4 +13,4 @@ const SearchResults = () => {
   );
 };
 
-export default SearchResults;
+export default Search;

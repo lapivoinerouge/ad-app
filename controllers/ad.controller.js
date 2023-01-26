@@ -3,7 +3,7 @@ const fs = require('fs');
 const getImageFileType = require('../utils/getImageFileType');
 
 const validateStringParam = (param) => {
-  return param && typeof param === 'string';
+  return param !== null && typeof param === 'string' && param.length > 0;
 }
 
 exports.getAll = async (req, res) => {

@@ -4,6 +4,10 @@ const fs = require('fs');
 
 const getImageFileType = require('../utils/getImageFileType');
 
+const validateStringParam = (param) => {
+  return param !== null && typeof param === 'string' && param.length > 0;
+}
+
 exports.register = async (req, res) => {
   try {
     const { username, password, phoneNumber } = req.body;
@@ -12,7 +16,7 @@ exports.register = async (req, res) => {
     const fileType = avatar ? await getImageFileType(avatar) : 'unknown';
     const acceptedFileType = ['image/png', 'image/jpg', 'image/jpeg'].includes(fileType);
 
-    if (username && typeof username === 'string' && password && typeof password === 'string' && avatar && acceptedFileType) {
+    if (validateStringParam(username) && validateStringParam(password) && avatar && acceptedFileType) {
       const existingUser = await User.findOne({ username: { $eq: username} });
       if (existingUser) {
         fs.unlinkSync(avatar.path);
@@ -21,7 +25,7 @@ exports.register = async (req, res) => {
       const user = await User.create({ username, password: await bcryptjs.hash(password, 10), avatar: avatar.filename, phoneNumber });
       res.status(201).json({ message: `User created: ${user.username}` })
     } else {
-      fs.unlinkSync(avatar.path);
+      if (avatar) fs.unlinkSync(avatar.path);
       res.status(400).json({ message: 'Bad request'});
     }
   } catch (err) {
