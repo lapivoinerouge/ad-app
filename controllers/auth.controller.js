@@ -62,6 +62,6 @@ exports.getUser = async (req, res) => {
   if (req.session.user.username ) {
     res.status(200).json({ username: req.session.user.username })
   } else {
-    res.status(401).json({ message: 'You are not authorized' });
+    res.status(401).json({ message: 'You need to log in' });
   }
 }

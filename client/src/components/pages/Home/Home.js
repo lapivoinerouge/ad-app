@@ -1,11 +1,11 @@
 import PageTitle from "../../common/PageTitle/PageTitle";
-import Ads from "../../features/Ads/Ads";
+import AllAds from "../../features/AllAds/AllAds";
 
 const Home = () => {
   return (
     <section>
       <PageTitle>Ads</PageTitle>
-      <Ads></Ads>
+      <AllAds />
     </section>
   );
 };

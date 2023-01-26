@@ -28,7 +28,9 @@ exports.getById = async (req, res) => {
 
 exports.getBySearchPhrase = async (req, res) => {
   try {
-    res.json(searchPhrase = await Ad.find(req.params.searchPhrase).populate('author'));
+    const data = await Ad.find({$text: {$search: req.params.searchPhrase}}).populate('author');
+    console.log(data);
+    res.json(data); 
   }
   catch(err) {
     res.status(500).json({ message: err });
@@ -47,7 +49,6 @@ exports.post = async (req, res) => {
     if (validateStringParam(title) && validateStringParam(content) && validateStringParam(location) && price && user && acceptedFileType) {
       const published = Date.now();
       const ad = new Ad({ title, content, published, image: image.filename, price, location, author: user.id });
-      console.log('AAAAA')
       await ad.save();
       res.json({ message: 'OK' });
     } else {

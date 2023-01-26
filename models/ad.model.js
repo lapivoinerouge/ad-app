@@ -10,4 +10,6 @@ const adSchema = new mongoose.Schema({
     author: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'User' },
 });
 
+adSchema.index({'$**': 'text'});
+
 module.exports = mongoose.model('Ad', adSchema);

@@ -2,9 +2,11 @@ import { createStore, combineReducers, compose, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import initialState from './initialState';
 import adsReducer from './adRedux';
+import searchPhraseReducer from './searchPhraseRedux';
 
 const subreducers = {
-  ads: adsReducer
+  ads: adsReducer,
+  searchPhrase: searchPhraseReducer
 }
 
 const reducer = combineReducers(subreducers);
