@@ -3,12 +3,10 @@ import thunk from 'redux-thunk';
 import initialState from './initialState';
 import adsReducer from './adRedux';
 import userReducer from './userRedux';
-import searchPhraseReducer from './searchPhraseRedux';
 
 const subreducers = {
   ads: adsReducer,
-  user: userReducer,
-  searchPhrase: searchPhraseReducer
+  user: userReducer
 }
 
 const reducer = combineReducers(subreducers);

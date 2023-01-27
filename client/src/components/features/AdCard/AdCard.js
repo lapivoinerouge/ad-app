@@ -7,10 +7,10 @@ import { faLocationDot, faCoins } from '@fortawesome/free-solid-svg-icons';
 import { IMAGES_URL } from '../../../config';
 import { NavLink } from 'react-router-dom';
 
-const Ad = props => {
+const AdCard = props => {
   return (
     <Col>
-      <NavLink className={styles.cardLink} to="/">
+      <NavLink className={styles.cardLink} to={`/ads/${props.id}`}>
         <Card>
           <Card.Img variant="top" style={{ height: '20rem', width: '100%', objectFit: 'cover' }} src={IMAGES_URL + props.image} />
           <Card.Body>
@@ -30,10 +30,10 @@ const Ad = props => {
   );
 }
 
-Ad.propTypes = {
+AdCard.propTypes = {
   image: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   location: PropTypes.string.isRequired
 };
 
-export default Ad;
+export default AdCard;

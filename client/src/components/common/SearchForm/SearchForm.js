@@ -12,10 +12,10 @@ const SearchForm = () => {
   }
 
   return (
-    <Form>
+    <Form onSubmit={handleSubmit}>
       <InputGroup className="mb-3">
         <Form.Control value={searchInput} onChange={e => setSearchInput(e.target.value)} placeholder='Search' type="text" />
-        <Button color="outline-primary" onClick={handleSubmit}>Search</Button>
+        <Button variant="primary" type='submit'>Submit</Button>
       </InputGroup>
     </Form>
   );

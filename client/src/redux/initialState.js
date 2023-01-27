@@ -1,5 +1,8 @@
 const initialState = {
-  ads: [],
+  ads: {
+    data: [],
+    request: {}
+  },
   user: null
 }
 

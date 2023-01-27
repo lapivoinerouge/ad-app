@@ -28,7 +28,7 @@ exports.getById = async (req, res) => {
 
 exports.getBySearchPhrase = async (req, res) => {
   try {
-    const data = await Ad.find({$text: {$search: req.params.searchPhrase}}).populate('author');
+    const data = await Ad.find({$text: { $search: req.params.searchPhrase }}).populate('author');
     console.log(data);
     res.json(data); 
   }
