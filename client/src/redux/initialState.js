@@ -1,6 +1,6 @@
 const initialState = {
   ads: [],
-  searchPhrase: ''
+  user: null
 }
 
 export default initialState;

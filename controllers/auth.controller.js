@@ -36,7 +36,7 @@ exports.register = async (req, res) => {
 exports.login = async (req, res) => {
   try {
     const { username, password } = req.body;
-    if (username && typeof username === 'string' && password && typeof password === 'string') {
+    if (validateStringParam(username) && validateStringParam(password)) {
       const user = await User.findOne({ username: { $eq: username} });
       if (!user) {
         res.status(400).json({ message: 'Login or password is incorrect'});
