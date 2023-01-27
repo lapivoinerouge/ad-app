@@ -1,5 +1,5 @@
 import { Form, Button, Alert, Spinner } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import PageTitle from "../../common/PageTitle/PageTitle";
 import { useState } from "react";
 import { AUTH_URL } from "../../../config";
@@ -22,6 +22,7 @@ const Login = () => {
       headers: {
         'Content-Type': 'application/json'
       },
+      credentials: 'include',
       body: JSON.stringify({ username, password })
     }
 
@@ -44,7 +45,7 @@ const Login = () => {
   }
 
   return (
-    <Form className='col-12 col-sm-3 mx-auto' onSubmit={handleSubmit}>
+    <Form className='col-12 col-sm-4 mx-auto' onSubmit={handleSubmit}>
       <PageTitle>Sign in</PageTitle>
 
       {status === 'success' && <Alert variant='success'>
@@ -77,6 +78,7 @@ const Login = () => {
       </Form.Group>
 
       <Button variant="primary" type='submit'>Submit</Button>
+      <p style={{ marginTop: '20px' }}>Don't have an account? <NavLink to='/register'>Sign up and get started!</NavLink></p>
     </Form>
   );
 };

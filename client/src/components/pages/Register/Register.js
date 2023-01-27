@@ -47,7 +47,7 @@ const Register = () => {
   }
 
   return (
-    <Form className='col-12 col-sm-3 mx-auto' onSubmit={handleSubmit}>
+    <Form className='col-12 col-sm-4 mx-auto' onSubmit={handleSubmit}>
       <PageTitle>Sign up</PageTitle>
 
       {status === 'success' && <Alert variant='success'>

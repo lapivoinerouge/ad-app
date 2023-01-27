@@ -11,6 +11,18 @@ const app = express();
 
 app.use(express.static(path.join(__dirname, '/public')));
 
+/* standard middleware */
+if(process.env.NODE_ENV !== 'production') {
+  app.use(
+    cors({
+      origin: ["http://localhost:3000", "http://localhost:8000"],
+      credentials: true,
+    })
+  );
+}
+app.use(express.urlencoded({ extended: false}));
+app.use(express.json());
+
 /* mongoose */
 require('./db');
 
@@ -18,29 +30,16 @@ require('./db');
 app.use(session({ 
   secret: process.env.SECRET,
   cookie: {
-    secure: process.env.NODE_ENV == 'production',
-    httpOnly: true,
+    secure: process.env.NODE_ENV == 'production'
   },
-  store: MongoStore.create(mongoose.connection), 
-  resave: false, 
+  store: MongoStore.create(mongoose.connection),
+  resave: false,
   saveUninitialized: false }));
 
 /* routes */
 const adRoutes = require('./routes/ads.routes');
 const userRoutes = require('./routes/users.routes');
 const authRoutes = require('./routes/auth.routes');
-
-/* standard middleware */
-if(process.env.NODE_ENV !== 'production') {
-  app.use(
-    cors({
-      origin: ['http://localhost:3000'],
-      credentials: true,
-    })
-  );
-}
-app.use(express.urlencoded({ extended: false}));
-app.use(express.json());
 
 /* API */
 app.use('/api', adRoutes);
