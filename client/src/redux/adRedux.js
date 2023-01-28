@@ -10,6 +10,7 @@ export const getRequests = ({ ads }) => ads.request;
 const createActionName = actionName => `app/ads/${actionName}`;
 
 const LOAD_ADS = createActionName('LOAD_ADS');
+const DELETE_AD = createActionName('DELETE_AD');
 
 const START_REQUEST = createActionName('START_REQUEST');
 const END_REQUEST = createActionName('END_REQUEST');
@@ -17,6 +18,7 @@ const ERROR_REQUEST = createActionName('ERROR_REQUEST');
 
 // actions
 export const loadAds = payload => ({ type: LOAD_ADS, payload });
+export const deleteAd = payload => ({ type: DELETE_AD, payload });
 
 export const startRequest = payload => ({ payload, type: START_REQUEST });
 export const endRequest = payload => ({ payload, type: END_REQUEST });
@@ -28,11 +30,22 @@ export const loadAllAdsRequest = () => {
     dispatch(startRequest({ name: 'LOAD_ADS' }));
     try {
       let res = await axios.get(`${API_URL}/ads`);
-      console.log(res.data);
       dispatch(loadAds(res.data));
       dispatch(endRequest({ name: 'LOAD_ADS' }));
     } catch (e) {
       dispatch(errorRequest({ name: 'LOAD_ADS', error: e.message }));
+    }
+  };
+}
+
+export const deleteAdRequest = id => {
+  return async (dispatch) => {
+    dispatch(startRequest({ name: 'DELETE_AD' }));
+    try {
+      await axios.delete(`${API_URL}/ads/${id}`, { withCredentials: 'true' });
+      dispatch(endRequest({ name: 'DELETE_AD' }));
+    } catch (e) {
+      dispatch(errorRequest({ name: 'DELETE_AD', error: e.message }));
     }
   };
 }

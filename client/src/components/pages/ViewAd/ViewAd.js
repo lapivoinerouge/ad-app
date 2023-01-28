@@ -8,7 +8,7 @@ import Ad from "../../features/Ad/Ad";
 
 const ViewAd = () => {
   const { id } = useParams();
-  const [ad, setAd] = useState({});
+  const [ad, setAd] = useState(null);
   const [success, setSuccess] = useState(false);
   const [pending, setPending] = useState(false);
   const [notFound, setNotFound] = useState(false);
@@ -53,6 +53,7 @@ const ViewAd = () => {
       </Spinner>}
     { success &&
       <Ad
+      id={id}
       image={IMAGES_URL + ad.image} 
       title={ad.title} 
       location={ad.location} 

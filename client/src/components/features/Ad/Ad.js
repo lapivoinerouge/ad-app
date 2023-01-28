@@ -1,15 +1,32 @@
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLocationDot, faCoins, faPhone, faClock } from '@fortawesome/free-solid-svg-icons';
-import { Col, Card, Row, Button } from 'react-bootstrap';
+import { Col, Card, Row, Button, Modal } from 'react-bootstrap';
 import Moment from 'react-moment';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getUser } from '../../../redux/userRedux';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { deleteAdRequest } from '../../../redux/adRedux';
 
 const Ad = props => {
   const user = useSelector(getUser);
-  const isSeller = user.username !== props.seller;
+  const isSeller = user ? user.username === props.seller : false;
+
+  const [showDialog, setShowDialog] = useState(false);
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleShow = () => setShowDialog(true);
+  const handleClose = () => setShowDialog(false);
+
+  const handleDelete = e => {
+    e.preventDefault();
+
+    dispatch(deleteAdRequest(props.id));
+    navigate('/');
+  }
 
   return (
     <Row>
@@ -40,8 +57,8 @@ const Ad = props => {
             </Card.Text>
             {isSeller && 
             <div style={{ display: 'flex', justifyContent: 'center', columnGap: '10px' }}>
-              <Button variant="primary" as={NavLink} to='/'>Edit</Button>
-              <Button variant="danger" as={NavLink} to='/'>Delete</Button>
+              <Button variant="primary" as={NavLink} to={`/ad/edit/${props.id}`}>Edit</Button>
+              <Button variant="danger" onClick={handleShow}>Delete</Button>
             </div>}
           </Card.Body>
         </Card>
@@ -59,6 +76,24 @@ const Ad = props => {
           </Card.Body>
         </Card>
       </Col>
+      
+      <Modal style={{ textAlign: 'center' }} show={showDialog} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Delete</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p>Are you sure you want to delete this ad?</p>
+          <p>This action is irreversible.</p></Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="danger" onClick={handleDelete}>
+            Delete
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
     </Row>
   );
 }

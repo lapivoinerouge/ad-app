@@ -4,9 +4,10 @@ const validateOwnership = async (req, res, next) => {
   const adId = req.params.id;
   const userId = req.session.user.id;
 
-  const ad = Ad.findById(adId);
+  const ad = await Ad.findById(adId);
+  const authorId = ad.author.toString();
 
-  if ( ad.author === userId ) {
+  if ( authorId === userId ) {
     next();
   } else {
     res.status(403).json({ message: 'Forbidden' });
