@@ -43,8 +43,7 @@ const EditAdForm = () => {
   }, []);
 
   const handleEditAd = updatedAd => {
-    dispatch(updateAdRequest(updatedAd, id));
-    navigate('/');
+    dispatch(updateAdRequest(updatedAd, id)).then(() => navigate('/'));
   };
 
   if(!user) return(

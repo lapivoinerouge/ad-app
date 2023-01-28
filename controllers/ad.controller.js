@@ -41,6 +41,7 @@ exports.post = async (req, res) => {
     const { title, content, price, location } = req.body;
     const user = req.session.user;
     const image = req.file;
+    console.log('LOL')
 
     const fileType = image ? await getImageFileType(image) : 'unknown';
     const acceptedFileType = ['image/png', 'image/jpg', 'image/jpeg'].includes(fileType);
@@ -49,7 +50,7 @@ exports.post = async (req, res) => {
       const published = Date.now();
       const ad = new Ad({ title, content, published, image: image.filename, price, location, author: user.id });
       await ad.save();
-      res.json({ message: 'OK' });
+      res.status(200).json({ message: 'OK' });
     } else {
       fs.unlinkSync(image.path);
       res.status(400).json({ message: 'Bad request' });

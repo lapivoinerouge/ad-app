@@ -4,7 +4,7 @@ import { API_URL } from '../config';
 //selectors
 export const getAds = ({ ads }) => ads.data;
 export const getAdById = ({ ads }, adId) => ads.data.find(ad => ad._id === adId);
-export const getRequests = ({ ads }) => ads.request;
+export const getRequest = ({ ads }) => ads.request;
 
 // action creators
 const createActionName = actionName => `app/ads/${actionName}`;
@@ -43,6 +43,7 @@ export const deleteAdRequest = id => {
     dispatch(startRequest({ name: 'DELETE_AD' }));
     try {
       await axios.delete(`${API_URL}/ads/${id}`, { withCredentials: 'true' });
+      dispatch(loadAllAdsRequest);
       dispatch(endRequest({ name: 'DELETE_AD' }));
     } catch (e) {
       dispatch(errorRequest({ name: 'DELETE_AD', error: e.message }));
@@ -61,9 +62,29 @@ export const updateAdRequest = (ad, id) => {
         }
       }
       await axios.put(`${API_URL}/ads/${id}`, ad, options);
+      dispatch(loadAllAdsRequest);
       dispatch(endRequest({ name: 'UPDATE_AD' }));
     } catch (e) {
       dispatch(errorRequest({ name: 'UPDATE_AD', error: e.message }));
+    }
+  };
+}
+
+export const addAdRequest = (ad) => {
+  return async (dispatch) => {
+    dispatch(startRequest({ name: 'ADD_AD' }));
+    try {
+      const options = {
+        withCredentials: 'true', 
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      }
+      await axios.post(`${API_URL}/ads`, ad, options);
+      dispatch(loadAllAdsRequest);
+      dispatch(endRequest({ name: 'ADD_AD' }));
+    } catch (e) {
+      dispatch(errorRequest({ name: 'ADD_AD', error: e.message }));
     }
   };
 }

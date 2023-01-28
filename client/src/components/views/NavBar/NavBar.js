@@ -1,4 +1,4 @@
-import { faRightFromBracket, faRightToBracket } from '@fortawesome/free-solid-svg-icons';
+import { faRightFromBracket, faRightToBracket, faSquarePlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Nav, Navbar, Container } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
@@ -14,6 +14,10 @@ const NavBar = () => {
           <Navbar.Brand as={NavLink} to='/'>TableManager.app</Navbar.Brand>
           <Nav className='me-2'>
             <Nav.Link as={NavLink} to='/'>Home</Nav.Link>
+            {user && 
+            <Nav.Link as={NavLink} to='/ad/add'>
+              <FontAwesomeIcon icon={faSquarePlus} title='Add ad' />
+            </Nav.Link>}
               {!user && 
               <Nav.Link as={NavLink} to='/login'>
                 <FontAwesomeIcon icon={faRightToBracket} title='Log in' />

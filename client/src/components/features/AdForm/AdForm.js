@@ -52,12 +52,12 @@ const AdForm = ({ action, actionText, ...props }) => {
       <Form.Group className="mb-3 col-md-8" controlId="formPrice">
         <Form.Label>Price</Form.Label>
         <Form.Control 
-          {...register("price", { required: true })} 
+          {...register("price", { required: true, min: 0 })} 
           value={price} 
           type="number" 
           placeholder="Enter price" 
           onChange={e => setPrice(e.target.value)} />
-          {errors.price && <small className="d-block form-text text-danger mt-2">This field is required.</small>}
+          {errors.price && <small className="d-block form-text text-danger mt-2">Min price is 0.</small>}
       </Form.Group>
       <Form.Group className="mb-3 col-md-8" controlId="formLocation">
         <Form.Label>Location</Form.Label>
@@ -71,7 +71,7 @@ const AdForm = ({ action, actionText, ...props }) => {
       </Form.Group>
       <Form.Group className="mb-3 col-md-8" controlId="formContent">
         <Form.Label>Content</Form.Label>
-        <ReactQuill theme="snow" value={content} onChange={setContent} />
+        <ReactQuill theme="snow" value={content} onChange={e => setContent(e.target.value)} />
         {errors.content && <small className="d-block form-text text-danger mt-2">This must be 20-1000 chars.</small>}
       </Form.Group>
       <Form.Group className="mb-3" controlId="formImage">

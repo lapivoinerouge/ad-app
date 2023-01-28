@@ -9,6 +9,7 @@ import Login from './components/pages/Login/Login';
 import Logout from './components/pages/Logout/Logout';
 import ViewAd from './components/pages/ViewAd/ViewAd';
 import EditAd from './components/pages/EditAd/EditAd';
+import AddAd from './components/pages/AddAd/AddAd';
 
 const App = () => {
   // const dispatch = useDispatch();
@@ -26,6 +27,7 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/search/:searchPhrase" element={<SearchResults />} />
           <Route path="/ad/:id" element={<ViewAd />} />
+          <Route path="/ad/add" element={<AddAd />} />
           <Route path="/ad/edit/:id" element={<EditAd />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
