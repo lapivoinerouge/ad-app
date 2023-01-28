@@ -1,3 +1,7 @@
+import axios from "axios";
+
+import { AUTH_URL } from "../config";
+
 //selectors
 export const getUser = ({ user }) => user;
 
@@ -9,6 +13,18 @@ const LOG_OUT = createActionName('LOG_OUT');
 // actions
 export const logIn = payload => ({ type: LOG_IN, payload });
 export const logOut = () => ({ type: LOG_OUT });
+
+// thunk
+export const fetchUserRequest = () => {
+  return async (dispatch) => {
+    try {
+      let res = await axios.get(`${AUTH_URL}/user`, { withCredentials: 'true' });
+      dispatch(logIn(res.data));
+    } catch (e) {
+      // do nothing
+    }
+  };
+}
 
 const userReducer = (statePart = [], action) => {
   switch (action.type) {

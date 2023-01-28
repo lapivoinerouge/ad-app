@@ -4,7 +4,7 @@ import PageTitle from "../../common/PageTitle/PageTitle";
 import { useState } from "react";
 import { AUTH_URL } from "../../../config";
 import { useDispatch } from 'react-redux';
-import { logIn } from "../../../redux/userRedux";
+import { fetchUserRequest, logIn } from "../../../redux/userRedux";
 
 const Login = () => {
   const [username, setUsername] = useState('');
@@ -31,7 +31,7 @@ const Login = () => {
       .then(async (res) => {
         if (res.status === 200) {
           setStatus('success');
-          dispatch(logIn({ username }));
+          dispatch(fetchUserRequest());
           await new Promise(r => setTimeout(r, 1500)).then(() => navigate('/'));
         } else if (res.status === 400) {
           setStatus('clientError');
