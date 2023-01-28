@@ -16,7 +16,6 @@ exports.getAll = async (req, res) => {
 };
 
 exports.getById = async (req, res) => {
-  console.log(req.params.id);
   try {
     const data = await Ad.findById(req.params.id).populate('author');
     if(!data) res.status(404).json({ message: 'Not found' });
@@ -87,8 +86,7 @@ exports.put = async (req, res) => {
       } else {
         await Ad.updateOne({ _id: req.params.id, author: user.id }, { $set: { title, content, price, location }});
       }
-
-      res.json({ message: 'OK' });
+      res.status(200).json({ message: 'OK' });
     } else {
       fs.unlinkSync(image.path);
       res.status(400).json({ message: 'Bad request' });

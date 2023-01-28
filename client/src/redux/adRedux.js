@@ -50,6 +50,24 @@ export const deleteAdRequest = id => {
   };
 }
 
+export const updateAdRequest = (ad, id) => {
+  return async (dispatch) => {
+    dispatch(startRequest({ name: 'UPDATE_AD' }));
+    try {
+      const options = {
+        withCredentials: 'true', 
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      }
+      await axios.put(`${API_URL}/ads/${id}`, ad, options);
+      dispatch(endRequest({ name: 'UPDATE_AD' }));
+    } catch (e) {
+      dispatch(errorRequest({ name: 'UPDATE_AD', error: e.message }));
+    }
+  };
+}
+
 const adsReducer = (statePart = [], action) => {
   switch (action.type) {
     case LOAD_ADS:

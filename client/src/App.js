@@ -7,14 +7,11 @@ import SearchResults from './components/pages/Search/Search';
 import Register from './components/pages/Register/Register';
 import Login from './components/pages/Login/Login';
 import Logout from './components/pages/Logout/Logout';
-import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { fetchUserRequest, logIn } from './redux/userRedux';
-import { AUTH_URL } from './config';
 import ViewAd from './components/pages/ViewAd/ViewAd';
+import EditAd from './components/pages/EditAd/EditAd';
 
 const App = () => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   // TODO: handle 401 errors in console
   // useEffect(() => {
@@ -29,6 +26,7 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/search/:searchPhrase" element={<SearchResults />} />
           <Route path="/ad/:id" element={<ViewAd />} />
+          <Route path="/ad/edit/:id" element={<EditAd />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/logout" element={<Logout />} />

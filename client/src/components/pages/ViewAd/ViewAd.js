@@ -3,7 +3,6 @@ import { Alert, Spinner } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { API_URL, IMAGES_URL } from "../../../config";
-import { fetchUserRequest } from "../../../redux/userRedux";
 import Ad from "../../features/Ad/Ad";
 
 const ViewAd = () => {
@@ -14,10 +13,6 @@ const ViewAd = () => {
   const [notFound, setNotFound] = useState(false);
 
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(fetchUserRequest());
-  }, []);
 
   useEffect(() => {
     const options = {
@@ -38,8 +33,9 @@ const ViewAd = () => {
           setNotFound(true);
         }
       })
+      .catch(err => console.log(err));
       setPending(false);
-  }, []);
+  }, [dispatch]);
 
   return (
     <>

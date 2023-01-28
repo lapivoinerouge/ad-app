@@ -52,8 +52,7 @@ const Ad = props => {
                 </Card.Text>
               </Card.Body>
             </Card>
-            <Card.Text style={{ margin: '2rem 1rem'}}>
-              {props.content}
+            <Card.Text dangerouslySetInnerHTML={{ __html: props.content }} style={{ margin: '2rem 1rem'}}>
             </Card.Text>
             {isSeller && 
             <div style={{ display: 'flex', justifyContent: 'center', columnGap: '10px' }}>
