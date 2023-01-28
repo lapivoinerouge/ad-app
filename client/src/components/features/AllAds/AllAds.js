@@ -32,7 +32,7 @@ const AllAds = () => {
   else return (
     <Row sm={1} md={3} className="g-4">
       {ads.map(ad => (
-        <AdCard key={ad._id} price={parseFloat(ad.price).toFixed(2)} image={ad.image} title={ad.title} location={ad.location} />
+        <AdCard key={ad._id} id={ad._id} price={parseFloat(ad.price).toFixed(2)} image={ad.image} title={ad.title} location={ad.location} />
       ))}
     </Row>
   );

@@ -70,6 +70,8 @@ exports.logout = async (req, res) => {
 
 exports.getUser = async (req, res) => {
   if (req.session.user.username) {
-    res.status(200).json({ username: req.session.user.username });
+    const username = req.session.user.username;
+    const user = await User.findOne({ username: { $eq: username} });
+    res.status(200).json({ username: user.username, phoneNumber: user.phoneNumber, avatar: user.avatar });
   }
 }

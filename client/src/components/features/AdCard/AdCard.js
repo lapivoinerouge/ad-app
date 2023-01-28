@@ -10,7 +10,7 @@ import { NavLink } from 'react-router-dom';
 const AdCard = props => {
   return (
     <Col>
-      <NavLink className={styles.cardLink} to={`/ads/${props.id}`}>
+      <NavLink className={styles.cardLink} to={`/ad/${props.id}`}>
         <Card>
           <Card.Img variant="top" style={{ height: '20rem', width: '100%', objectFit: 'cover' }} src={IMAGES_URL + props.image} />
           <Card.Body>

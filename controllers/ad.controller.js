@@ -16,6 +16,7 @@ exports.getAll = async (req, res) => {
 };
 
 exports.getById = async (req, res) => {
+  console.log(req.params.id);
   try {
     const data = await Ad.findById(req.params.id).populate('author');
     if(!data) res.status(404).json({ message: 'Not found' });
@@ -29,7 +30,6 @@ exports.getById = async (req, res) => {
 exports.getBySearchPhrase = async (req, res) => {
   try {
     const data = await Ad.find({$text: { $search: req.params.searchPhrase }}).populate('author');
-    console.log(data);
     res.json(data); 
   }
   catch(err) {
