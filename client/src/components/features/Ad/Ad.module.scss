@@ -11,8 +11,22 @@
   font-size: 2 * $base-size;
 }
 
+.adImg {
+  height: 15rem;
+  width: 80%;
+  object-fit: cover;
+  margin: 1rem auto;
+}
+
 .sellerTitle {
   font-size: 2 * $base-size;
+}
+
+.sellerAvatar {
+  height: 10rem;
+  width: 70%;
+  object-fit: cover;
+  margin: 2rem auto;
 }
 
 .sellerPhone:hover {
@@ -34,4 +48,22 @@
 
 .buttonDanger {
   background-color: $color-warning;
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: center;
+  column-gap: 10px;
+}
+
+.icon {
+  margin-right: 5px;
+}
+
+.contextText {
+  margin: 2rem 1rem;
+}
+
+.modal {
+  text-align: center;
 }

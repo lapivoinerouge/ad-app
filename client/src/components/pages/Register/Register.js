@@ -91,7 +91,7 @@ const Register = () => {
 
           <Form.Group className='mb-3' controlId='formFile'>
             <Form.Label className={styles.registerInputLabel}>upload avatar</Form.Label>
-            <Form.Control type='file' onChange={e => setAvatar(e.target.files[0])} style={{ display: 'none' }} placeholder='avatar' />
+            <Form.Control type='file' onChange={e => setAvatar(e.target.files[0])} className={styles.avatarFileInput} placeholder='avatar' />
           </Form.Group>
 
           <Button className={styles.button} variant="primary" type='submit'>Submit</Button>

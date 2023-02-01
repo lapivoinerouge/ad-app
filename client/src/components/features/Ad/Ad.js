@@ -37,28 +37,28 @@ const Ad = props => {
         <Card className={styles.card}>
           <Card.Body>
             <Card.Title className={styles.cardTitle}>{props.title}</Card.Title>
-            <Card.Img variant="top" style={{ height: '15rem', width: '80%', objectFit: 'cover', margin: '1rem auto' }} src={props.image} />
+            <Card.Img variant="top" className={styles.adImg} src={props.image} />
             <Card className={styles.card}>
               <Card.Body>
                 <Card.Text>
-                <FontAwesomeIcon icon={faLocationDot} style={{ marginRight: '5px' }}  />
+                <FontAwesomeIcon icon={faLocationDot} className={styles.icon} />
                   {props.location}
                 </Card.Text>
                 <Card.Text>
-                  <FontAwesomeIcon icon={faCoins} style={{ marginRight: '5px' }}  />
+                  <FontAwesomeIcon icon={faCoins} className={styles.icon}  />
                   {props.price}
                 </Card.Text>
                 <Card.Text>
-                  <FontAwesomeIcon icon={faClock} style={{ marginRight: '5px' }} />
+                  <FontAwesomeIcon icon={faClock} className={styles.icon}  />
                   <Moment date={new Date(props.published)} fromNow />
                 </Card.Text>
               </Card.Body>
             </Card>
-            <Card.Text style={{ margin: '2rem 1rem'}}>
+            <Card.Text className={styles.contextText}>
               {props.content}
             </Card.Text>
             {isSeller && 
-            <div style={{ display: 'flex', justifyContent: 'center', columnGap: '10px' }}>
+            <div className={styles.buttonContainer}>
               <Button className={styles.button} as={NavLink} to={`/ad/edit/${props.id}`}>Edit</Button>
               <Button className={clsx(styles.button, styles.buttonDanger)} onClick={handleShow}>Delete</Button>
             </div>}
@@ -70,16 +70,16 @@ const Ad = props => {
         <Card className={styles.card}>
           <Card.Body>
             <Card.Title className={styles.sellerTitle}>{props.seller}</Card.Title>
-            <Card.Img variant="top" style={{ height: '10rem', width: '70%', objectFit: 'cover', margin: '2rem auto' }} src={props.sellerAvatar} />
+            <Card.Img variant="top" className={styles.sellerAvatar} src={props.sellerAvatar} />
             <Card.Text className={styles.sellerPhone}>
-              <FontAwesomeIcon icon={faPhone} style={{ marginRight: '5px' }} />
+              <FontAwesomeIcon icon={faPhone} className={styles.icon} />
               {props.sellerPhone}
             </Card.Text>
           </Card.Body>
         </Card>
       </Col>
       
-      <Modal style={{ textAlign: 'center' }} show={showDialog} onHide={handleClose}>
+      <Modal className={styles.modal} show={showDialog} onHide={handleClose}>
         <Modal.Header>
           <Modal.Title>Delete</Modal.Title>
         </Modal.Header>

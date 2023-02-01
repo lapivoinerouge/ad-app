@@ -26,8 +26,8 @@ const AllAds = () => {
   }, []);
 
   if (pending) return (
-    <Spinner animation='border' role='status' style={{ marginLeft: '50%' }}>
-      <span className='visually-hidden'>Loading...</span>
+    <Spinner animation='border' role='status' className={styles.spinner}>
+      <span className='visually-hidden'></span>
     </Spinner>
   )
   else return (

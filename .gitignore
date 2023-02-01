@@ -6,13 +6,13 @@ node_modules
 .pnp.js
 
 # uploaded files
-/public/uploads
+# /public/uploads
 
 # testing
 /coverage
 
 # production
-/build
+# /build
 
 # misc
 .DS_Store

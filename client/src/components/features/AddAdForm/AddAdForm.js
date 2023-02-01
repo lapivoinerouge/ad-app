@@ -39,7 +39,7 @@ const AddAdForm = () => {
   return (
     <>
       { pending && 
-        <Spinner className={styles.spinner} animation='border' role='status' style={{ marginLeft: '50%' }}>
+        <Spinner className={styles.spinner} animation='border' role='status'>
           <span className='visually-hidden'></span>
         </Spinner>}
       { success &&
