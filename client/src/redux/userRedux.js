@@ -21,7 +21,7 @@ export const fetchUserRequest = () => {
       let res = await axios.get(`${AUTH_URL}/user`, { withCredentials: 'true' });
       dispatch(logIn(res.data));
     } catch (e) {
-      // do nothing
+      console.log(e);
     }
   };
 }

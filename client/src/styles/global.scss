@@ -1,0 +1,31 @@
+@import './settings.scss';
+
+.container {
+  padding: 20px;
+  height: $content-height;
+  max-width: $content-width;
+  background: $color-light;
+  overflow: scroll;
+  box-shadow: inset 0px 0px 3px 1px #0000000d;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 20px;
+  height: 20px;
+}
+
+/* Track */
+::-webkit-scrollbar-track, ::-webkit-scrollbar-corner {
+  background: rgba(255, 255, 255, 0);
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: rgba(113, 113, 113, 0.255);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(204, 203, 203, 0.255);
+}

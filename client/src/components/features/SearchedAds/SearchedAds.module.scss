@@ -1,0 +1,8 @@
+@import '../../../styles/settings.scss';
+
+.noResultText {
+  text-align: center;
+  font-size: 3 * $base-size;
+  color: $color-dark-transparent;
+  margin: .3 * $content-height .1 * $content-width;
+}

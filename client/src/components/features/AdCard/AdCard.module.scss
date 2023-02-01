@@ -1,8 +1,37 @@
+@import '../../../styles/settings.scss';
+
+.column {
+  margin-bottom: 2 * $base-size;
+}
+
 .cardLink {
   text-decoration: none;
-  color:#000000e9;
+  color: $color-dark;
+  width: 100%;
 
   &:hover {
-    color:#000000e9;
+    color: $color-dark;
+    text-decoration: none;
   }
+}
+
+.card {
+  background: $color-lightest;
+  box-shadow: $box-shadow;
+  border-radius: 0%;
+  border: none;
+}
+
+.cardBody {
+  text-align: center;
+}
+
+.cardText {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.cardIcon {
+  margin-right: 0.5 * $base-size;
 }

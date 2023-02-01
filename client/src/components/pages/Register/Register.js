@@ -1,8 +1,10 @@
-import { Form, Button, Alert, Spinner } from "react-bootstrap";
+import { Form, Button, Alert, Spinner, Card } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import PageTitle from "../../common/PageTitle/PageTitle";
 import { useState } from "react";
 import { AUTH_URL } from "../../../config";
+import clsx from "clsx";
+import styles from "./Register.module.scss";
 
 const Register = () => {
   const [username, setUsername] = useState('');
@@ -47,55 +49,55 @@ const Register = () => {
   }
 
   return (
-    <Form className='col-12 col-sm-4 mx-auto' onSubmit={handleSubmit}>
+    <section className={styles.registerSection}>
       <PageTitle>Sign up</PageTitle>
+      <Card className={styles.registerCard}>
+        <Form className={clsx('col-12 col-sm-8', styles.form)} onSubmit={handleSubmit}>
+          {status === 'success' && <Alert variant='success' className={styles.alert}>
+            <Alert.Heading>Sucess</Alert.Heading>
+            <p>You have been successfully registered</p>
+          </Alert>}
 
-      {status === 'success' && <Alert variant='success'>
-        <Alert.Heading>Sucess</Alert.Heading>
-        <p>You have been successfully registered</p>
-      </Alert>}
+          {status === 'serverError' && <Alert variant='danger' className={styles.alert}>
+            <Alert.Heading>Something went wrong...</Alert.Heading>
+            <p>Unexpected error, try again.</p>
+          </Alert>}
 
-      {status === 'serverError' && <Alert variant='danger'>
-        <Alert.Heading>Something went wrong...</Alert.Heading>
-        <p>Unexpected error, try again.</p>
-      </Alert>}
+          {status === 'clientError' && <Alert variant='danger' className={styles.alert}>
+            <Alert.Heading>No enough data</Alert.Heading>
+            <p>Fill all the fields and try again.</p>
+          </Alert>}
 
-      {status === 'clientError' && <Alert variant='danger'>
-        <Alert.Heading>No enough data</Alert.Heading>
-        <p>Fill all the fields and try again.</p>
-      </Alert>}
+          {status === 'loginError' && <Alert variant='warning' className={styles.alert}>
+            <Alert.Heading>Username already in use</Alert.Heading>
+            <p>You have to choose another username.</p>
+          </Alert>}
 
-      {status === 'loginError' && <Alert variant='warning'>
-        <Alert.Heading>Username already in use</Alert.Heading>
-        <p>You have to choose another username.</p>
-      </Alert>}
+          {status === 'loading' && <Spinner className={styles.spinner} animation='border' role='status'>
+            <span className='visually-hidden'>Loading...</span>
+          </Spinner>}
 
-      {status === 'loading' && <Spinner animation='border' role='status'>
-        <span className='visually-hidden'>Loading...</span>
-      </Spinner>}
+          <Form.Group className='mb-3' controlId='formUsername'>
+            <Form.Control className={styles.registerInput} value={username} onChange={e => setUsername(e.target.value)} type='text' placeholder='username' />
+          </Form.Group>
 
-      <Form.Group className='mb-3' controlId='formUsername'>
-        <Form.Label>Username</Form.Label>
-        <Form.Control value={username} onChange={e => setUsername(e.target.value)} type='text' placeholder='Enter your username' />
-      </Form.Group>
+          <Form.Group className='mb-3' controlId='formPassword'>
+            <Form.Control className={styles.registerInput} value={password} onChange={e => setPassword(e.target.value)} type='password' placeholder='password' />
+          </Form.Group>
 
-      <Form.Group className='mb-3' controlId='formPassword'>
-        <Form.Label>Password</Form.Label>
-        <Form.Control value={password} onChange={e => setPassword(e.target.value)} type='password' placeholder='Enter your password' />
-      </Form.Group>
+          <Form.Group className='mb-3' controlId='formPhone'>
+            <Form.Control className={styles.registerInput} value={phone} onChange={e => setPhone(e.target.value)} type='text' placeholder='phone number' />
+          </Form.Group>
 
-      <Form.Group className='mb-3' controlId='formPhone'>
-        <Form.Label>Phone number</Form.Label>
-        <Form.Control value={phone} onChange={e => setPhone(e.target.value)} type='text' placeholder='Enter your phone number' />
-      </Form.Group>
+          <Form.Group className='mb-3' controlId='formFile'>
+            <Form.Label className={styles.registerInputLabel}>upload avatar</Form.Label>
+            <Form.Control type='file' onChange={e => setAvatar(e.target.files[0])} style={{ display: 'none' }} placeholder='avatar' />
+          </Form.Group>
 
-      <Form.Group className='mb-3' controlId='formFile'>
-        <Form.Label>Avatar</Form.Label>
-        <Form.Control type='file' onChange={e => setAvatar(e.target.files[0])} placeholder='Upload your avatar' />
-      </Form.Group>
-
-      <Button variant="primary" type='submit'>Submit</Button>
-    </Form>
+          <Button className={styles.button} variant="primary" type='submit'>Submit</Button>
+        </Form>
+      </Card>
+    </section>
   );
 };
 

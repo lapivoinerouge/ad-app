@@ -1,0 +1,35 @@
+@import '../../../styles/settings.scss';
+
+.input {
+  border-radius: 0%;  
+  width: 100%;
+  border:none;
+  box-shadow: $box-shadow;
+  text-align: center;
+}
+
+.fileInput > div {
+  border-radius: 0%;
+  margin: 10px 0;
+  width: 100%;
+}
+
+.form {
+  margin: auto;
+  width: .8 * $content-width;
+  text-align: center;
+  color: rgba(0, 0, 0, 0.274);
+}
+
+.button {
+  border-radius: 0%;
+  background: $color-main;
+  width: 100%;
+  border: none;
+  margin: 20px 0;
+
+  &:hover,
+  &:active {
+    background: $color-nav-d-grey;
+  }
+}

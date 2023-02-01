@@ -10,15 +10,12 @@ import Logout from './components/pages/Logout/Logout';
 import ViewAd from './components/pages/ViewAd/ViewAd';
 import EditAd from './components/pages/EditAd/EditAd';
 import AddAd from './components/pages/AddAd/AddAd';
+import Footer from './components/views/Footer/Footer';
+
+/* styles */
+import styles from "./styles/global.scss";
 
 const App = () => {
-  // const dispatch = useDispatch();
-
-  // TODO: handle 401 errors in console
-  // useEffect(() => {
-  //   dispatch(fetchUserRequest());
-  // }, []);
-
   return (
     <main>
       <Header />
@@ -35,6 +32,7 @@ const App = () => {
           <Route path='*' element={<Error />} />
         </Routes>
     </Container>
+    <Footer />
    </main>
   );
 }

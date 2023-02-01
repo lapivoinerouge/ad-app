@@ -1,6 +1,7 @@
 import { Button, InputGroup, Form } from 'react-bootstrap';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import styles from './SearchForm.module.scss'
 
 const SearchForm = () => {
   const [searchInput, setSearchInput] = useState('');
@@ -8,17 +9,17 @@ const SearchForm = () => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    navigate(`/search/${searchInput}`)
+    navigate(`/search/${searchInput}`);
   }
 
   return (
-    <Form onSubmit={handleSubmit}>
-      <InputGroup className="mb-3">
-        <Form.Control value={searchInput} onChange={e => setSearchInput(e.target.value)} placeholder='Search' type="text" />
-        <Button variant="primary" type='submit'>Submit</Button>
+    <Form className={styles.searchDiv} onSubmit={handleSubmit}>
+      <InputGroup>
+        <Form.Control className={styles.searchInput} value={searchInput} onChange={e => setSearchInput(e.target.value)} placeholder='Search' type="search" />
+        <Button className={styles.searchButton} type='submit'>Submit</Button>
       </InputGroup>
     </Form>
   );
 };
 
-  export default SearchForm;
+export default SearchForm;

@@ -1,0 +1,82 @@
+@import '../../../styles/settings.scss';
+
+$navbar-font-size: 2.5 * $base-size;
+
+.container {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  justify-content: space-between;
+  margin: 0 auto;
+  width: 90vw;
+}
+
+.navbar {
+  z-index: 100;
+  width: 100vw;
+  min-height: 10vh;
+  background: rgba(255, 255, 255, 0);
+  font-size: $navbar-font-size;
+  box-shadow: $box-shadow;
+}
+
+.collapse {
+  align-items: baseline;
+  justify-content: center;
+  flex-direction: column;
+  margin-left: 20px;
+}
+
+.toggler {
+  margin-left: 20px;
+}
+
+.navbarLogo {
+  font-size: $base-size;
+  min-width: 5vw;
+}
+
+.navbarLogoIcon {
+  color: $color-main;
+  font-size: $navbar-font-size;
+}
+
+.navbarLogoText {
+  color: $color-main;
+  font-size: $navbar-font-size;
+  font-family: $font-logo;
+}
+
+.navbarLink {
+  color: $color-main;
+  font-size: $navbar-font-size;
+  font-family: $font-logo;
+}
+
+.navActions {
+  column-gap: $base-size;
+  justify-content: right;
+  align-items: center;
+  flex-direction: row;
+}
+
+.avatar {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: solid $color-lightest 1px;
+  box-shadow: $box-shadow;
+}
+
+@media (max-width : 990px) {
+  .navActions {
+   justify-content: center;
+  }
+}
+
+@media (max-width: 950px) {
+  .navbarLogoText {
+    display: none;
+  }
+}

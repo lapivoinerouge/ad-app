@@ -1,0 +1,12 @@
+@import '../../../styles/settings.scss';
+
+.footer {
+  background: rgba(255, 255, 255, 0);
+  color: rgba(129, 129, 129, 0.401);
+  font-size: x-small;
+  box-shadow: -2px -2px 3px 0 #0000000d;
+  position: relative;
+  padding: $base-size * 2;
+  z-index: 100;
+  height: 5vw;
+}

@@ -1,0 +1,35 @@
+@import '../../../styles/settings.scss';
+
+.title {
+  display: none;
+  position: fixed;
+  transform: rotate(-90deg);
+  top: 30vh;
+  left: 1vw;
+  width: 400px;
+  font-size: 7em;
+  color: $color-main;
+
+  &:hover {
+    cursor: default;
+  }
+}
+
+@media ( max-width: 1110px) {
+ .title {
+  top: 20vh;
+  left: -5vw;
+  width: 400px;
+  font-size: 6em;
+ }
+}
+
+@media (max-width: 550px) {
+  .title {
+    top: 20vh;
+    left: -30vw;
+    width: 400px;
+    font-size: 6em;
+  }
+ }
+ 

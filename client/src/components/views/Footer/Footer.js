@@ -1,6 +1,9 @@
+import clsx from 'clsx';
+import styles from './Footer.module.scss';
+
 const Footer = () => {
   return (
-      <footer className='text-center text-muted'>Copyright © Ads App 2023</footer>
+      <footer className={clsx('text-center', styles.footer)}>Copyright © Rubbertree 2023</footer>
   );
 }
 

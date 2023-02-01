@@ -6,6 +6,7 @@ import { API_URL } from "../../../config";
 import { updateAdRequest } from "../../../redux/adRedux";
 import { getUser } from "../../../redux/userRedux";
 import AdForm from "../AdForm/AdForm";
+import styles from "./EditAdForm.module.scss";
 
 const EditAdForm = () => {
   const { id } = useParams();
@@ -47,14 +48,14 @@ const EditAdForm = () => {
   };
 
   if(!user) return(
-    <Alert variant='danger'>
+    <Alert className={styles.alert} variant='danger'>
       <Alert.Heading>You don't have permissions to see the content of this page.</Alert.Heading>
     </Alert>
   )
   return (
     <>
       { notFound &&
-        <Alert variant='danger'>
+        <Alert className={styles.alert} variant='danger'>
           <Alert.Heading>Ad doesn't exist or has been deleted.</Alert.Heading>
         </Alert>}
       { pending && 
@@ -64,7 +65,6 @@ const EditAdForm = () => {
       { success &&
         <AdForm
         action={handleEditAd}
-        actionText='Edit ad'
         id={ad._id}
         title={ad.title}
         content={ad.content}

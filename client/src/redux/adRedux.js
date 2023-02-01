@@ -94,11 +94,11 @@ const adsReducer = (statePart = [], action) => {
     case LOAD_ADS:
 			return {...statePart, data: action.payload};
     case START_REQUEST:
-      return { ...statePart, requests: {...statePart.requests, [action.payload.name]: { pending: true, error: null, success: false }} };
+      return { ...statePart, request: {name: action.payload.name, pending: true, error: null, success: false }};
     case END_REQUEST:
-      return { ...statePart, requests: { ...statePart.requests, [action.payload.name]: { pending: false, error: null, success: true }} };
+      return { ...statePart, request: {name: action.payload.name, pending: false, error: null, success: true }};
     case ERROR_REQUEST:
-      return { ...statePart, requests: { ...statePart.requests, [action.payload.name]: { pending: false, error: action.payload.error, success: false }} };
+      return { ...statePart, request: {name: action.payload.name, pending: false, error: action.payload.error, success: false }};
     default:
       return statePart;
   };

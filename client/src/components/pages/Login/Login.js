@@ -1,10 +1,12 @@
-import { Form, Button, Alert, Spinner } from "react-bootstrap";
+import { Form, Button, Alert, Spinner, Card } from "react-bootstrap";
 import { NavLink, useNavigate } from "react-router-dom";
 import PageTitle from "../../common/PageTitle/PageTitle";
 import { useState } from "react";
 import { AUTH_URL } from "../../../config";
 import { useDispatch } from 'react-redux';
-import { fetchUserRequest, logIn } from "../../../redux/userRedux";
+import { fetchUserRequest } from "../../../redux/userRedux";
+import styles from "./Login.module.scss";
+import clsx from "clsx";
 
 const Login = () => {
   const [username, setUsername] = useState('');
@@ -45,41 +47,43 @@ const Login = () => {
   }
 
   return (
-    <Form className='col-12 col-sm-4 mx-auto' onSubmit={handleSubmit}>
+    <section className={styles.loginSection}>
       <PageTitle>Sign in</PageTitle>
+      <Card className={styles.loginCard}>
+        <Form className={clsx('col-12 col-sm-8', styles.form)} onSubmit={handleSubmit}>
 
-      {status === 'success' && <Alert variant='success'>
-        <Alert.Heading>Sucess</Alert.Heading>
-        <p>You have been successfully logged in</p>
-      </Alert>}
+          {status === 'success' && <Alert variant='success' className={styles.alert}>
+            <Alert.Heading>Sucess!</Alert.Heading>
+            <p>You have been successfully logged in.</p>
+          </Alert>}
 
-      {status === 'serverError' && <Alert variant='danger'>
-        <Alert.Heading>Something went wrong...</Alert.Heading>
-        <p>Unexpected error, try again.</p>
-      </Alert>}
+          {status === 'serverError' && <Alert variant='danger' className={styles.alert}>
+            <Alert.Heading>Something went wrong...</Alert.Heading>
+            <p>Unexpected error, try again.</p>
+          </Alert>}
 
-      {status === 'clientError' && <Alert variant='danger'>
-        <Alert.Heading>Incorrect data</Alert.Heading>
-        <p>Username or password is incorrect</p>
-      </Alert>}
+          {status === 'clientError' && <Alert variant='danger' className={styles.alert}>
+            <Alert.Heading>Incorrect data</Alert.Heading>
+            <p>Username or password is incorrect.</p>
+          </Alert>}
 
-      {status === 'loading' && <Spinner animation='border' role='status'>
-        <span className='visually-hidden'>Loading...</span>
-      </Spinner>}
+          {status === 'loading' && <Spinner className={styles.spinner} animation='border' role='status'>
+            <span className='visually-hidden'></span>
+          </Spinner>}
 
-      <Form.Group className='mb-3' controlId='formUsername'>
-        <Form.Label>Username</Form.Label>
-        <Form.Control value={username} onChange={e => setUsername(e.target.value)} type='text' placeholder='Enter your username' />
-      </Form.Group>
+          <Form.Group className='mb-4' controlId='formUsername'>
+            <Form.Control className={styles.loginInput} value={username} onChange={e => setUsername(e.target.value)} type='text' autoComplete='username' placeholder='username' />
+          </Form.Group>
 
-      <Form.Group className='mb-3' controlId='formPassword'>
-        <Form.Label>Password</Form.Label>
-        <Form.Control value={password} onChange={e => setPassword(e.target.value)} type='password' placeholder='Enter your password' />
-      </Form.Group>
+          <Form.Group className='mb-4' controlId='formPassword'>
+            <Form.Control className={styles.loginInput} value={password} onChange={e => setPassword(e.target.value)} type='password' autoComplete='current-password' placeholder='password' />
+          </Form.Group>
 
-      <Button variant="primary" type='submit'>Submit</Button>
-      <p style={{ marginTop: '20px' }}>Don't have an account? <NavLink to='/register'>Sign up and get started!</NavLink></p>
-    </Form>
+          <Button className={styles.button} variant="primary" type='submit'>Submit</Button>
+          <p className={styles.signUp}>Don't have an account? <NavLink to='/register'>Sign up and get started!</NavLink></p>
+        </Form>
+      </Card>
+    </section>
   );
 };
 

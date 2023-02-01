@@ -5,6 +5,7 @@ import { Spinner } from 'react-bootstrap';
 import Row from 'react-bootstrap/Row';
 import AdCard from '../AdCard/AdCard';
 import { API_URL } from '../../../config';
+import styles from './SearchedAds.module.scss';
 
 const SearchedAds = props => {
   const ads = useSelector(getAds);
@@ -28,10 +29,10 @@ const SearchedAds = props => {
         })
       })
       setPending(false);
-  }, []);
+  }, [searchPhrase]);
 
   if (ads.length === 0) return (
-    <p>No results found. Try again with different keywords.</p>
+    <p className={styles.noResultText}>No results found. Try again with different keywords.</p>
   )
   else if (pending) return (
     <Spinner animation='border' role='status' style={{ marginLeft: '50%' }}>

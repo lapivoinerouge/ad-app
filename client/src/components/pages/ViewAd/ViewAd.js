@@ -3,6 +3,7 @@ import { Alert, Spinner } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { API_URL, IMAGES_URL } from "../../../config";
+import PageTitle from "../../common/PageTitle/PageTitle";
 import Ad from "../../features/Ad/Ad";
 
 const ViewAd = () => {
@@ -38,7 +39,8 @@ const ViewAd = () => {
   }, [dispatch]);
 
   return (
-    <>
+    <section>
+      <PageTitle/>
     { notFound &&
     <Alert variant='danger'>
       <Alert.Heading>Ad doesn't exist or has been deleted.</Alert.Heading>
@@ -50,16 +52,16 @@ const ViewAd = () => {
     { success &&
       <Ad
       id={id}
-      image={IMAGES_URL + ad.image} 
+      image={IMAGES_URL + (ad.image ? ad.image : 'no-img.png')} 
       title={ad.title} 
       location={ad.location} 
-      price={ad.price}
+      price={parseFloat(ad.price).toFixed(2)}
       published={ad.published}
       content={ad.content}
       seller={ad.author.username}
-      sellerAvatar={IMAGES_URL + ad.author.avatar}
-      sellerPhone={ad.author.phone} />}
-    </>
+      sellerAvatar={IMAGES_URL + (ad.author.avatar ? ad.author.avatar : 'no-avatar.png')}
+      sellerPhone={ad.author.phoneNumber} />}
+    </section>
   )
 }
 

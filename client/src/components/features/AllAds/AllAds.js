@@ -4,7 +4,8 @@ import { getAds, loadAds } from "../../../redux/adRedux";
 import { io } from "socket.io-client";
 import { SERVER_URL } from '../../../config';
 import { Row, Spinner } from 'react-bootstrap';
-import AdCard from '../AdCard/AdCard'
+import AdCard from '../AdCard/AdCard';
+import styles from './AllAds.module.scss';
 
 const AllAds = () => {
   const ads = useSelector(getAds);
@@ -30,10 +31,12 @@ const AllAds = () => {
     </Spinner>
   )
   else return (
-    <Row sm={1} md={3} className="g-4">
-      {ads.map(ad => (
+    <Row className="g-4">
+      {ads.length > 0 && ads.map(ad => (
         <AdCard key={ad._id} id={ad._id} price={parseFloat(ad.price).toFixed(2)} image={ad.image} title={ad.title} location={ad.location} />
       ))}
+      {ads.length === 0 && 
+      <p className={styles.noResultText}>No results found</p>}
     </Row>
   );
 }

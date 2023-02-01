@@ -1,0 +1,64 @@
+@import '../../../styles/settings.scss';
+
+.loginSection {
+  height: .9 * $content-height;
+}
+
+.loginCard {
+  padding: 2 * $base-size;
+  margin: auto;
+  border-radius: 0%;
+  border: none;
+  height: .95 * $content-height;
+  width: .9 * $content-width;
+  box-shadow: $box-shadow;
+}
+
+.form {
+  margin: auto;
+  width: .4 * $content-width;
+  text-align: center;
+}
+
+
+.loginInput {
+  box-shadow: $box-shadow;
+  text-align: center;
+  border-radius: 0%;
+  border: none;
+}
+
+.loginInputLabel {
+  font-size: 1.5 * $base-size;
+}
+
+.button {
+  border-radius: 0%;
+  background: $color-main;
+  width: 100%;
+  border: none;
+  margin: 20px auto;
+
+  &:hover,
+  &:active {
+    background: $color-nav-d-grey;
+  }
+}
+
+.alert {
+  margin-bottom: 30px;
+  text-align: center;
+  border-radius: 0%;
+  border: none;
+}
+
+.spinner {
+  color: rgba(0, 0, 0, 0.318);
+  height: 40px;
+  width: 40px;
+  margin-bottom: 30px;
+}
+
+.signUp {
+  font-size: 1.1 * $base-size;
+}
