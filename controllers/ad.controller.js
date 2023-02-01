@@ -1,10 +1,6 @@
 const Ad = require('../models/ad.model');
 const fs = require('fs');
-const getImageFileType = require('../utils/getImageFileType');
-
-const validateStringParam = (param) => {
-  return param !== null && typeof param === 'string' && param.length > 0;
-}
+const { validateStringParam, validateImage } = require('../utils/validateRequestParams');
 
 exports.getAll = async (req, res) => {
   try {
@@ -32,6 +28,7 @@ exports.getBySearchPhrase = async (req, res) => {
     res.json(data); 
   }
   catch(err) {
+    console.log(err);
     res.status(500).json({ message: err });
   }
 }
@@ -41,21 +38,25 @@ exports.post = async (req, res) => {
     const { title, content, price, location } = req.body;
     const user = req.session.user;
     const image = req.file;
-    console.log('LOL')
 
-    const fileType = image ? await getImageFileType(image) : 'unknown';
-    const acceptedFileType = ['image/png', 'image/jpg', 'image/jpeg'].includes(fileType);
-
-    if (validateStringParam(title) && validateStringParam(content) && validateStringParam(location) && price && user && acceptedFileType) {
+    if (validateStringParam(title) && validateStringParam(content) && validateStringParam(location) && price && user && validateImage(image)) {
       const published = Date.now();
-      const ad = new Ad({ title, content, published, image: image.filename, price, location, author: user.id });
-      await ad.save();
+      let newAd;
+      if (image) {
+        newAd = new Ad({ title, content, published, image: image.filename, price, location, author: user.id });
+      } else {
+        newAd = new Ad({ title: title, content: content, published: published, price: price, location: location, author: user.id });
+      }
+      await newAd.save();
       res.status(200).json({ message: 'OK' });
     } else {
-      fs.unlinkSync(image.path);
+      if (image) {
+        fs.unlinkSync(image.path);
+      }
       res.status(400).json({ message: 'Bad request' });
     }
   } catch(err) {
+    console.log(err);
     res.status(500).json({ message: err });
   }
 }
@@ -65,15 +66,8 @@ exports.put = async (req, res) => {
   const user = req.session.user;
   const image = req.file;
 
-  let acceptedFileType = true;
-
   try {
-    if (image) {
-      const fileType = await getImageFileType(image);
-      acceptedFileType = ['image/png', 'image/jpg', 'image/jpeg'].includes(fileType);
-    }
-
-    if (validateStringParam(title) && validateStringParam(content) && validateStringParam(location) && price && user && acceptedFileType) {
+    if (validateStringParam(title) && validateStringParam(content) && validateStringParam(location) && price && user && validateImage(image)) {
       const existingAd = await Ad.findById(req.params.id);
 
       if (!existingAd) {
@@ -101,13 +95,18 @@ exports.put = async (req, res) => {
 exports.delete = async (req, res) => {
   try {
     const ad = await Ad.findById(req.params.id);
+
     if(ad) {
+      if (ad.image) {
+        fs.unlinkSync(`public/uploads/${ad.image}`);
+      }
       await Ad.deleteOne({ _id: req.params.id });
       res.status(204).json(ad);
     }
     else res.status(404).json({ message: 'Not found' });
   }
   catch(err) {
+    console.log(err);
     res.status(500).json({ message: err });
   }
 }

@@ -2,33 +2,34 @@ const User = require('../models/user.model');
 const bcryptjs = require('bcryptjs');
 const fs = require('fs');
 
-const getImageFileType = require('../utils/getImageFileType');
-
-const validateStringParam = (param) => {
-  return param !== null && typeof param === 'string' && param.length > 0;
-}
+const { validateStringParam, validateImage } = require('../utils/validateRequestParams');
 
 exports.register = async (req, res) => {
   try {
     const { username, password, phoneNumber } = req.body;
     const avatar = req.file;
 
-    const fileType = avatar ? await getImageFileType(avatar) : 'unknown';
-    const acceptedFileType = ['image/png', 'image/jpg', 'image/jpeg'].includes(fileType);
-
-    if (validateStringParam(username) && validateStringParam(password) && avatar && acceptedFileType) {
+    if (validateStringParam(username) && validateStringParam(password) && validateImage(avatar)) {
       const existingUser = await User.findOne({ username: { $eq: username} });
       if (existingUser) {
-        fs.unlinkSync(avatar.path);
+        if (avatar !== null) fs.unlinkSync(avatar.path);
         return res.status(409).json({ message: 'User already exists'})
       }
-      const user = await User.create({ username, password: await bcryptjs.hash(password, 10), avatar: avatar.filename, phoneNumber });
+
+      let user;
+      if (avatar) {
+        user = new User({ username, password: await bcryptjs.hash(password, 10), avatar: avatar.filename, phoneNumber });
+      } else {
+        user = new User({ username, password: await bcryptjs.hash(password, 10), phoneNumber });
+      }
+      await user.save();
       res.status(201).json({ message: `User created: ${user.username}` })
     } else {
-      if (avatar) fs.unlinkSync(avatar.path);
+      if (avatar !== null) fs.unlinkSync(avatar.path);
       res.status(400).json({ message: 'Bad request'});
     }
   } catch (err) {
+    console.log(err);
     res.status(500).json({ message: err.message });
   }
 }
